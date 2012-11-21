@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.pighouse.server.domain.Topic" table="TOPIC">
+		<id name="id" type="java.lang.Long" column="ID">
+			<generator class="increment"></generator>
+		</id>
+		<property name="title" type="string" column="TITLE"/>
+		<property name="descript" type="string" column="DESCRIPT"/>
+		<property name="createTime" type="java.util.Date" column="CREATETIME"/>
+		<property name="lastUpdateTime" type="java.util.Date" column="LASTUPDATETIME"/>
+		
+		<set name="comments" table="COMMENT" inverse="true" cascade="delete">
+            <key column="TOPIC_ID"/>
+            <one-to-many class="com.pighouse.server.domain.Comment"/>
+        </set>
+        <many-to-one name="topicType" column="TOPIC_TYPE_ID" 
+        	class="com.pighouse.server.domain.TopicType" cascade="none"/>
+        <many-to-one name="createUser" column="USER_ID" 
+        	class="com.pighouse.server.domain.User" cascade="none"/>
+	</class>
+</hibernate-mapping> 

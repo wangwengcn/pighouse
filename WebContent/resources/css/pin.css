@@ -1,0 +1,145 @@
+img {
+    border: 0 none;
+}
+
+a {
+    color: #221919;
+    outline: medium none;
+    text-decoration: none;
+}
+a:hover {
+    color: #CB2027;
+    text-decoration: underline;
+}
+
+.ImgLink {
+    background-color: #FFFFFF;
+    display: block;
+}
+.ImgLink:active {
+    background-color: #221919;
+}
+.ImgLink img {
+    display: block;
+    margin: 0 auto;
+}
+.ImgLink:hover img, .ImgLink:active img {
+    opacity: 0.9;
+}
+
+.pin {
+    background-color: #FFFFFF;
+    box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+	color: #211922;
+    font-family: "helvetica neue",arial,sans-serif;
+	font-size: 12px;
+}
+.pin.private {
+    background: none repeat scroll 0 0 #F2F0F0;
+}
+.pin .PinHolder {
+    position: relative;
+}
+.pin .ImgLink {
+    position: relative;
+}
+.pin .ImgLink:hover {
+    text-decoration: none;
+}
+.pin .ImgLink img {
+    max-width: 192px;
+    opacity: 1;
+}
+.pin .ImgLink img.lazy {
+    opacity: 0;
+}
+.pin .PinImage {
+    background-color: #F2F0F0;
+    cursor: -moz-zoom-in;
+}
+.pin .PinImageImg {
+    background-color: #F2F0F0;
+    min-height: 75px;
+}
+.pin .description {
+    margin: 3px 0 0 5px;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+.pin .stats {
+    overflow: hidden;
+}
+.pin .stats span {
+    float: left;
+    margin-right: 10px;
+}
+.convo {
+    background-color: #F2F0F0;
+    margin: 0;
+    padding: 3px 5px;
+}
+.convo:after {
+    clear: both;
+    content: " ";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+.convo p {
+    margin: 0 0 0 36px;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+.convo .ImgLink {
+    float: left;
+    margin-right: 6px;
+    width: 30px;
+}
+.convo .ImgLink img {
+    height: 30px;
+    width: 30px;
+}
+a.convo {
+    display: block;
+    padding: 12px 15px;
+    text-align: center;
+}
+a.convo:hover {
+    background-color: #F2F0F0;
+}
+a.convo:active {
+    background-color: #E1DFDF;
+    color: #221919;
+}
+.private .attribution {
+    border-top: 1px solid #CCCCCC;
+}
+.attribution {
+    color: #AD9C9C;
+    margin-top: 10px;
+}
+.attribution a {
+    color: #8C7E7E;
+}
+.attribution p {
+    display: table-cell;
+    height: 30px;
+    max-width: 170px;
+    vertical-align: middle;
+}
+.comments {
+    border-top: 1px solid #D9D4D4;
+    margin: 0 -15px;
+    padding: 0 15px;
+}
+.comments .comment {
+    border-bottom: 1px solid #D9D4D4;
+    border-top: 1px solid #FCFAFA;
+    overflow: hidden;
+}
+.comments .comment:last-child {
+    border-bottom-width: 0;
+}
+.comments .comment p {
+    width: 156px;
+}

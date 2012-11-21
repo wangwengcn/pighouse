@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- 激活spring的注解. -->
+	<context:annotation-config />
+
+	<!-- 把标记了@Controller注解的类转换为bean -->
+	<context:component-scan base-package="com.pighouse.server.springmvc.controller" />
+	
+	<!-- 配置注解驱动的Spring MVC Controller 的编程模型.注:此标签只在 Servlet MVC工作! -->
+	<mvc:annotation-driven />
+	
+	<!-- 静态资源的处理 -->
+	<mvc:resources location="/resources/" mapping="/resources/**"/>
+
+	<!-- 对模型视图名称的解析，即在模型视图名称添加前后缀 -->
+	<beans:bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+
+	<!-- Only needed because we require fileupload in the org.springframework.samples.mvc.fileupload package -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+	
+</beans:beans>
