@@ -12,5 +12,11 @@ public class HomeController {
 	{
 		return "index";
 	}
+	
+	@RequestMapping("/page/home")
+	public String homePage(ModelMap modelMap)
+	{
+		return "page/home";
+	}
 
 }

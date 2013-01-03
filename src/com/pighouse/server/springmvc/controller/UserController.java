@@ -145,10 +145,11 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/getUser")
-	public @ResponseBody User getUser() throws Exception
+	public @ResponseBody User getUser(String email, String password) throws Exception
 	{	
 		User u = new User();
-		u.setEmail("123");
+		u.setEmail(email);
+		u.setPassword(password);
 		return u;
 	}
 	

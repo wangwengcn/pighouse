@@ -3,6 +3,9 @@ package com.pighouse.server.domain;
 import java.util.Date;
 import java.util.Set;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name="User")
 public class User {
 	
 	private Long userId;
