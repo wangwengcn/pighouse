@@ -39,5 +39,9 @@ public class SessionUtil {
 	public static Object getAttribute(String key, HttpSession session) {
 		return session.getAttribute(key);
 	}
+	
+	public static Boolean getloginFlag(HttpServletRequest request) {
+		return request.getSession().getAttribute(UserConstant.LOGIN_USER) != null;
+	}
 
 }

@@ -1,48 +1,64 @@
 package com.pighouse.server.domain.vo;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlElement;
+
+@XmlRootElement(name="AjaxResult")
 public class AjaxResult {
 
-	private String status;
 	private String errorCode;
-	private Object result;
+	private String result;
+	private List<ErrorMessage> errorMessages = null;
 	
 	public AjaxResult(){
 		
 	}
 	
-	public AjaxResult(String status){
-		this.status = status;
+	public AjaxResult(String result){
+		this(result, null);
 	}
 	
-	public AjaxResult(String status, String errorCode){
-		this.status = status;
+	public AjaxResult(String result, String errorCode){
+		this.result = result;
 		this.errorCode = errorCode;
 	}
 	
-	public AjaxResult(String status, Object result){
-		this.status = status;
-		this.result = result;
+	@XmlElement(name = "errorItem")
+	public List<ErrorMessage> getErrorMessages() {
+		return errorMessages;
+	}
+
+	public void setErrorMessages(List<ErrorMessage> errorMessages) {
+		this.errorMessages = errorMessages;
 	}
 	
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
 	public String getErrorCode() {
 		return errorCode;
 	}
+	
 	public void setErrorCode(String errorCode) {
 		this.errorCode = errorCode;
 	}
-	public Object getResult() {
+	
+	public String getResult() {
 		return result;
 	}
-	public void setResult(Object result) {
+	
+	public void setResult(String result) {
 		this.result = result;
 	}
 	
+	public void addErrorMessage(ErrorMessage errorMessage)
+	{
+		if(errorMessages == null)
+		{
+			errorMessages = new ArrayList<ErrorMessage>();
+		}
+		errorMessages.add(errorMessage);
+	}
 	
 
 }

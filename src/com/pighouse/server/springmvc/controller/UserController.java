@@ -8,15 +8,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.pighouse.server.constants.ModelConstant;
 import com.pighouse.server.constants.UserConstant;
 import com.pighouse.server.domain.User;
 import com.pighouse.server.domain.form.SignInCredentialVo;
+import com.pighouse.server.domain.form.SignInForm;
 import com.pighouse.server.domain.form.SignUpCredentialVo;
+import com.pighouse.server.domain.vo.AjaxResult;
+import com.pighouse.server.domain.vo.ErrorMessage;
 import com.pighouse.server.service.UserService;
 import com.pighouse.server.utils.SessionUtil;
 import com.pighouse.server.utils.VOConverter;
@@ -28,6 +33,11 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	static
+	{
+		
+	}
 	
 	@RequestMapping(value="/login" ,  method = RequestMethod.GET)
 	public String login(HttpServletRequest request, ModelMap modelMap) throws Exception
@@ -144,6 +154,15 @@ public class UserController {
 		
 	}
 	
+	// 以下为Ajax使用
+	
+	/**
+	 * 测试使用
+	 * @param email
+	 * @param password
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/getUser")
 	public @ResponseBody User getUser(String email, String password) throws Exception
 	{	
@@ -151,6 +170,78 @@ public class UserController {
 		u.setEmail(email);
 		u.setPassword(password);
 		return u;
+	}
+	
+	/**
+	 * 获取当前用户是否已经登录
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/signIn",  method = RequestMethod.POST)
+	public @ResponseBody User signIn(@Valid SignInForm form, BindingResult result, 
+			HttpServletRequest request)
+	{	
+		User user = null;
+		if(result.hasErrors())
+		{
+			user = new User();
+			for(ObjectError objectError : result.getAllErrors())
+			{
+				if(objectError instanceof FieldError)
+				{
+					ErrorMessage errorMessage = new ErrorMessage();
+					errorMessage.setPropertyName(((FieldError)objectError).getField());
+					errorMessage.setErrorMessage(objectError.getDefaultMessage());
+					user.addErrorMessage(errorMessage);
+				}
+			}
+			return user;
+		}
+		else 
+		{
+			// 验证email
+			user = userService.getUsersByEmail(form.getEmail());
+			if(user == null )
+			{
+				user = new User();
+				ErrorMessage errorMessage = new ErrorMessage();
+				errorMessage.setPropertyName("email");
+				errorMessage.setErrorMessage("该账号不存在");
+				user.addErrorMessage(errorMessage);
+				return user;
+			}
+			else 
+			{
+				// 验证密码
+				if(!form.getPassword().trim().equalsIgnoreCase(user.getPassword().trim()))
+				{
+					ErrorMessage errorMessage = new ErrorMessage();
+					errorMessage.setPropertyName("password");
+					errorMessage.setErrorMessage("密码错误");
+					user.addErrorMessage(errorMessage);
+					return user;
+				}
+			}
+			
+		}
+		// 用户名和密码匹配，正常登录
+		SessionUtil.addLogin(user, request);
+		return user;
+	}
+	
+	/**
+	 * 获取当前用户是否已经登录
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/getloginFlag",  method = RequestMethod.POST)
+	public @ResponseBody AjaxResult getloginFlag(HttpServletRequest request) throws Exception
+	{	
+		AjaxResult result = new AjaxResult();
+		result.setResult(SessionUtil.getloginFlag(request).toString());
+		return result;
 	}
 	
 }

@@ -36,7 +36,7 @@ public class SecurityCodeController {
 	@RequestMapping(value="/validate")
 	public @ResponseBody AjaxResult validateCode(ModelMap model, SessionStatus status, String securityCode) throws Exception
 	{	
-		AjaxResult  result = new AjaxResult(ModelConstant.AJAX_FALSE);
+		AjaxResult  result = new AjaxResult(ModelConstant.RESULT_FALSE_STRING);
 		String code =  (String) model.get(UserConstant.SECURITY_CODE);
 		if(null == code || null == securityCode)
 		{
@@ -44,7 +44,7 @@ public class SecurityCodeController {
 		}
 		if(code.equalsIgnoreCase(securityCode.trim()))
 		{
-			result = new AjaxResult(ModelConstant.AJAX_SUCCESS);
+			result = new AjaxResult(ModelConstant.RESULT_SUCCESS_STRING);
 		}		
 		return result;
 	}

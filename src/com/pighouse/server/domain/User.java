@@ -5,8 +5,10 @@ import java.util.Set;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.pighouse.server.domain.vo.AjaxResult;
+
 @XmlRootElement(name="User")
-public class User {
+public class User extends AjaxResult {
 	
 	private Long userId;
 	private String email;

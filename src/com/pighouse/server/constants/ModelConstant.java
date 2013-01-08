@@ -6,8 +6,8 @@ public class ModelConstant {
 	
 	public static final String APP_TITLE = APP_NAME + "-分享你的快乐";
 	
-	public static final String AJAX_SUCCESS = "200";
+	public static final String RESULT_SUCCESS_STRING = "true";
 	
-	public static final String AJAX_FALSE = "201";
+	public static final String RESULT_FALSE_STRING = "false";
 
 }
