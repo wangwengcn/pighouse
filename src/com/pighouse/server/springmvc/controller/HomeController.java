@@ -10,13 +10,6 @@ public class HomeController {
 	@RequestMapping("/")
 	public String home(ModelMap modelMap)
 	{
-		return "index";
+		return "home";
 	}
-	
-	@RequestMapping("/page/home")
-	public String homePage(ModelMap modelMap)
-	{
-		return "page/home";
-	}
-
 }
