@@ -43,5 +43,9 @@ public class SessionUtil {
 	public static Boolean getloginFlag(HttpServletRequest request) {
 		return request.getSession().getAttribute(UserConstant.LOGIN_USER) != null;
 	}
+	
+	public static User getloginUser(HttpServletRequest request) {
+		return (User)request.getSession().getAttribute(UserConstant.LOGIN_USER);
+	}
 
 }

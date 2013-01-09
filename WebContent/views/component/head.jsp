@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ page import="com.pighouse.server.utils.SessionUtil"%>
+<%@ page import="com.pighouse.server.domain.User"%>
+<%
+	User currUser = SessionUtil.getloginUser(request);
+%>
 <div class="navbar navbar-inverse navbar-fixed-top">
 	<div class="navbar-inner">
 		<div class="container containerWrapper">
@@ -25,20 +29,32 @@
 						</ul></li>
 				</ul>
 				<div class="navbar-form pull-right">
-					<button id="loginButton" class="btn btn-primary">Sign in</button>
-					<button id="newTopic" class="btn btn-primary">新主题</button>
+					<button id="newTopic" class="btn btn-primary">分享</button>
+					<button id="loginButton" <%= currUser != null ? "style='display:none'" : "" %> class="btn btn-danger">Sign in</button>
+					<div id="myInfo" <%= currUser == null ? "style='display:none'" : "" %> class="btn-group">
+		                <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle">
+		                	<i class="icon-user icon-white"></i>
+		                	<span id="showDisplayName"><%= currUser != null ? currUser.getDisplayName() :"" %></span>
+		                	<span class="caret"></span>
+		                </button>
+		                <ul class="dropdown-menu">
+		                  <li><a href="#">我的头像</a></li>
+		                  <li class="divider"></li>
+		                  <li><a href="<c:url value="/user/logout" />">退出登录</a></li>
+		                </ul>
+	              </div>
 				</div>
 			</div>
 			<!--/.nav-collapse -->
 		</div>
 	</div>
 </div>
-<div id="loginWindow" class="modal hide fade" tabindex="-1"
+<div id="popupWindow" class="modal hide fade" tabindex="-1"
 	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal"
 			aria-hidden="true">&times;</button>
-		<h3 id="loginWindowLabel"></h3>
+		<h3 id="popupWindowTitle"></h3>
 	</div>
 	<div class="modal-body">
 		<form id="loginForm" class="form-horizontal">
@@ -62,21 +78,6 @@
 				</div>
 			</div>
 		</form>
-	</div>
-	<div class="modal-footer">
-		<button id="loginSubmitButton" class="btn btn-large btn-primary"
-			type="submit">Sign in</button>
-	</div>
-</div>
-
-<div id="newTopicWindow" class="modal hide fade" tabindex="-1"
-	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal"
-			aria-hidden="true">&times;</button>
-		<h3 id="newTopicWindowLabel">发表主题</h3>
-	</div>
-	<div class="modal-body">
 		<form id="newTopicForm" class="form-horizontal">
 			<div class="control-group">
 				<label class="control-label" for="email">标题</label>
@@ -93,9 +94,14 @@
 			<div class="control-group">
 				<label class="control-label" for="email">图片</label>
 				<div class="controls">
-					<input type="text" name="title" id="title" />
+					<input type="file" name="picture" id="picture" />
 				</div>
 			</div>
+		</form>
+		<form id="loadingForm" class="form-horizontal">
+			<div style="max-width: 400px; margin: 0 auto 10px; text-align: center" class="well">
+              <img src="<c:url value="/resources/assets/img/loading-50.gif" />"/>
+            </div>
 		</form>
 	</div>
 	<div class="modal-footer">
@@ -106,6 +112,10 @@
 
 <script>
 	$(function() {
+		// 0:null,1:login,2:new topic
+		var windowType = 0;
+		// 0:un-login,1:login
+		var loginStatus = 0;
 		// 登录相关
 		var validator = $('#loginForm').validate({
 			rules : {
@@ -120,6 +130,7 @@
 			},
 			errorClass : 'text-error',
 			submitHandler : function(form) {
+				showLoading();
 				$('#loginForm').ajaxSubmit({
 					dataType : 'xml',
 					type : 'post',
@@ -130,31 +141,48 @@
 		});
 
 		$("#loginButton").click(function() {
+			windowType = 1;
+			popUpWindow();
+			$('#loginForm').show();
 			validator.resetForm();
-			$('#loginWindowLabel').html("Please sign in");
-			$('#loginWindow').modal();
+			$('#popupWindowTitle').html("Please sign in");
 		});
 
 		$("#loginSubmitButton").click(function() {
-			$('#loginForm').submit();
+			if(windowType == 1)
+			{
+				$('#loginForm').submit();
+			}
+			else if(windowType == 2)
+			{
+				$('#newTopicForm').submit();
+			}
 		});
 
 		// 主题相关
 		$("#newTopic").click(function() {
+			popUpWindow();
+			showLoading();
+			$('#popupWindowTitle').html("处理中...");
 			$.ajax({
 				  type: 'POST',
 				  dataType: 'xml',
 				  url: '<c:url value="/user/getloginFlag" />?date=' + new Date(),
 				  success: function(xml) {
+					  		$('#loadingForm').hide();
 					  		var result = $(xml).find("result").text();
 					  		if(result == 'true')
 				  			{
-					  			$('#newTopicWindow').modal();
+					  			windowType = 1;
+					  			$('#popupWindowTitle').html("我要分享");
+					  			$('#newTopicForm').show();
 				  			}
 					  		else
 				  			{
-					  			$('#loginWindowLabel').html("请先登录再发表新主题");
-					  			$('#loginWindow').modal();
+					  			windowType = 1;
+					  			validator.resetForm();
+					  			$('#popupWindowTitle').html("请先登录再发表分享");
+					  			$('#loginForm').show();
 				  			}
 						}
 				});
@@ -166,10 +194,14 @@
 			if($errorItems.length == 0)
 			{
 				// 登录成功
-				alert($(xml).find("email").text());
+				$('#popupWindow').modal("hide");
+				$('#loginButton').hide();
+				$('#myInfo').show();
+				$('#showDisplayName').html($(xml).find("displayName"));
 			}
 	  		else
 			{
+	  			$('#loadingForm').hide();
 	 			// 显示错误消息
 	 			$errorItems.each(function(){
 	 				var obj = new Object();
@@ -177,6 +209,19 @@
 	 				validator.showErrors(obj);
 	 			});
 			}
+		}
+		
+		function popUpWindow()
+		{
+			$('#popupWindow').modal();
+			$('#loginForm').hide();
+			$('#newTopicForm').hide();
+			$('#loadingForm').hide();
+		}
+		
+		function showLoading()
+		{
+			$('#loadingForm').show();
 		}
 
 	});

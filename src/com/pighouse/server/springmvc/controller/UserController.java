@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.pighouse.server.constants.ModelConstant;
+import com.pighouse.server.constants.ErrorCodeModel;
 import com.pighouse.server.constants.UserConstant;
 import com.pighouse.server.domain.User;
 import com.pighouse.server.domain.form.SignInCredentialVo;
@@ -154,26 +154,8 @@ public class UserController {
 		
 	}
 	
-	// 以下为Ajax使用
-	
 	/**
-	 * 测试使用
-	 * @param email
-	 * @param password
-	 * @return
-	 * @throws Exception
-	 */
-	@RequestMapping(value="/getUser")
-	public @ResponseBody User getUser(String email, String password) throws Exception
-	{	
-		User u = new User();
-		u.setEmail(email);
-		u.setPassword(password);
-		return u;
-	}
-	
-	/**
-	 * 获取当前用户是否已经登录
+	 * Ajax登录
 	 * @param request
 	 * @return
 	 * @throws Exception
@@ -207,7 +189,7 @@ public class UserController {
 				user = new User();
 				ErrorMessage errorMessage = new ErrorMessage();
 				errorMessage.setPropertyName("email");
-				errorMessage.setErrorMessage("该账号不存在");
+				errorMessage.setErrorMessage(ErrorCodeModel.ACCOUNT_NOT_EXIST);
 				user.addErrorMessage(errorMessage);
 				return user;
 			}
@@ -218,12 +200,11 @@ public class UserController {
 				{
 					ErrorMessage errorMessage = new ErrorMessage();
 					errorMessage.setPropertyName("password");
-					errorMessage.setErrorMessage("密码错误");
+					errorMessage.setErrorMessage(ErrorCodeModel.PASSWORD_NOT_MATCH);
 					user.addErrorMessage(errorMessage);
 					return user;
 				}
 			}
-			
 		}
 		// 用户名和密码匹配，正常登录
 		SessionUtil.addLogin(user, request);
