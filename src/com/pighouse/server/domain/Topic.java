@@ -3,18 +3,34 @@ package com.pighouse.server.domain;
 import java.util.Date;
 import java.util.Set;
 
-public class Topic {
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.pighouse.server.domain.vo.AjaxResult;
+
+@XmlRootElement(name="Topic")
+public class Topic extends AjaxResult{
 	
 	private Long id;
+	@NotBlank
 	private String title;
 	private String descript;
 	private Date createTime;
 	private Date lastUpdateTime;
+	private Set<TopicPicture> pictures;
 	// relations
 	private Set<Comment> comments;
 	private TopicType topicType;
 	private User createUser;
 	
+	public Set<TopicPicture> getPictures() {
+		return pictures;
+	}
+	public void setPictures(Set<TopicPicture> pictures) {
+		this.pictures = pictures;
+	}
 	public Long getId() {
 		return id;
 	}

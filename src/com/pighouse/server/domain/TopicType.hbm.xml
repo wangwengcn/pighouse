@@ -4,7 +4,7 @@
 <hibernate-mapping>
 	<class name="com.pighouse.server.domain.TopicType" table="TOPIC_TYPE">
 		<id name="id" type="java.lang.Long" column="ID">
-			<generator class="increment"></generator>
+			<generator class="native"></generator>
 		</id>
 		<property name="name" type="string" column="NAME"/>
 		<property name="descript" type="string" column="DESCRIPT"/>

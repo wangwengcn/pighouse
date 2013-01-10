@@ -4,13 +4,19 @@
 <hibernate-mapping>
 	<class name="com.pighouse.server.domain.Topic" table="TOPIC">
 		<id name="id" type="java.lang.Long" column="ID">
-			<generator class="increment"></generator>
+			<generator class="native"></generator>
 		</id>
 		<property name="title" type="string" column="TITLE"/>
 		<property name="descript" type="string" column="DESCRIPT"/>
 		<property name="createTime" type="java.util.Date" column="CREATETIME"/>
 		<property name="lastUpdateTime" type="java.util.Date" column="LASTUPDATETIME"/>
 		
+		<set name="pictures" table="TOPIC_PICTURE" inverse="true" cascade="save-update,delete">
+            <key>
+                <column name="TOPIC_ID" />
+            </key>
+            <one-to-many class="com.pighouse.server.domain.TopicPicture"/>
+        </set>
 		<set name="comments" table="COMMENT" inverse="true" cascade="delete">
             <key column="TOPIC_ID"/>
             <one-to-many class="com.pighouse.server.domain.Comment"/>

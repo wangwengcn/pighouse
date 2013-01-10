@@ -16,6 +16,18 @@ create table USER
 	PASSWORD varchar(12)
 )default charset=utf8;
 
+--TOPIC
+create table TOPIC
+(
+	ID int PRIMARY KEY AUTO_INCREMENT,
+	title varchar(20),
+	DESCRIPT varchar(50),
+	CREATETIME date,
+	LASTUPDATETIME date,
+	USER_ID int,
+	TOPIC_TYPE_ID int
+)default charset=utf8;
+
 --TOPIC_TYPE
 create table TOPIC_TYPE
 (
@@ -26,16 +38,14 @@ create table TOPIC_TYPE
 	DISPLAY_ORDER int(2)
 )default charset=utf8;
 
---TOPIC
-create table TOPIC
+--TOPIC_PICTURE
+CREATE TABLE TOPIC_PICTURE
 (
-	ID int PRIMARY KEY AUTO_INCREMENT,
-	title varchar(20),
-	DESCRIPT varchar(20),
-	CREATETIME date,
-	LASTUPDATETIME date,
-	USER_ID int,
-	TOPIC_TYPE_ID int
+    ID int PRIMARY KEY AUTO_INCREMENT,
+    FILE_NAME VARCHAR(40),
+    CONTENT MEDIUMBLOB,
+    SIZE INT,
+    TOPIC_ID INT
 )default charset=utf8;
 
 --COMMENT

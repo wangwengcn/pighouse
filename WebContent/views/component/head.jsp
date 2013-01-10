@@ -30,19 +30,23 @@
 				</ul>
 				<div class="navbar-form pull-right">
 					<button id="newTopic" class="btn btn-primary">分享</button>
-					<button id="loginButton" <%= currUser != null ? "style='display:none'" : "" %> class="btn btn-danger">Sign in</button>
-					<div id="myInfo" <%= currUser == null ? "style='display:none'" : "" %> class="btn-group">
-		                <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle">
-		                	<i class="icon-user icon-white"></i>
-		                	<span id="showDisplayName"><%= currUser != null ? currUser.getDisplayName() :"" %></span>
-		                	<span class="caret"></span>
-		                </button>
-		                <ul class="dropdown-menu">
-		                  <li><a href="#">我的头像</a></li>
-		                  <li class="divider"></li>
-		                  <li><a href="<c:url value="/user/logout" />">退出登录</a></li>
-		                </ul>
-	              </div>
+					<button id="loginButton"
+						<%=currUser != null ? "style='display:none'" : ""%>
+						class="btn btn-danger">Sign in</button>
+					<div id="myInfo"
+						<%=currUser == null ? "style='display:none'" : ""%>
+						class="btn-group">
+						<button data-toggle="dropdown"
+							class="btn btn-warning dropdown-toggle">
+							<i class="icon-user icon-white"></i> <span id="showDisplayName"><%=currUser != null ? currUser.getDisplayName() : ""%></span>
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li><a href="#">我的头像</a></li>
+							<li class="divider"></li>
+							<li><a href="<c:url value="/user/logout" />">退出登录</a></li>
+						</ul>
+					</div>
 				</div>
 			</div>
 			<!--/.nav-collapse -->
@@ -78,7 +82,7 @@
 				</div>
 			</div>
 		</form>
-		<form id="newTopicForm" class="form-horizontal">
+		<form id="newTopicForm" class="form-horizontal" enctype="multipart/form-data">
 			<div class="control-group">
 				<label class="control-label" for="email">标题</label>
 				<div class="controls">
@@ -88,24 +92,38 @@
 			<div class="control-group">
 				<label class="control-label" for="password">描述</label>
 				<div class="controls">
-					<textarea name="desc" id="desc"></textarea>
+					<textarea name="descript" id="descript"></textarea>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="email">图片</label>
 				<div class="controls">
-					<input type="file" name="picture" id="picture" />
+					<div id="picFile" class="fileupload fileupload-new" data-provides="fileupload">
+						<div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;">
+							<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" />
+						</div>
+						<div>
+							<div class="btn btn-file">
+								<div class="fileupload-new">选择</div>
+								<div class="fileupload-exists">更改</div>
+								<input id="picture" name="picture" type="file" />
+							</div> 
+						</div>
+					</div>
 				</div>
 			</div>
 		</form>
-		<form id="loadingForm" class="form-horizontal">
-			<div style="max-width: 400px; margin: 0 auto 10px; text-align: center" class="well">
-              <img src="<c:url value="/resources/assets/img/loading-50.gif" />"/>
-            </div>
-		</form>
 	</div>
 	<div class="modal-footer">
-		<button id="loginSubmitButton" class="btn btn-large btn-primary"
+		<!-- 
+		<div class="alert alert-warning">
+			<strong>注意!</strong>图片预览仅在FireFox和IE10+可用.
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+		 -->
+		<img id="loadingForm" src="<c:url value="/resources/assets/img/loading-50.gif" />" />
+		<button class="btn btn-large" data-dismiss="modal" aria-hidden="true">关闭</button>
+		<button id="popupSubmitButton" class="btn btn-large btn-primary"
 			type="submit">提交</button>
 	</div>
 </div>
@@ -116,8 +134,18 @@
 		var windowType = 0;
 		// 0:un-login,1:login
 		var loginStatus = 0;
-		// 登录相关
-		var validator = $('#loginForm').validate({
+		
+		// 提交按钮点击事件
+		$("#popupSubmitButton").click(function() {
+			if (windowType == 1) {
+				$('#loginForm').submit();
+			} else if (windowType == 2) {
+				$('#newTopicForm').submit();
+			}
+		});
+	
+		// 登录相关验证
+		var loginValidator = $('#loginForm').validate({
 			rules : {
 				email : {
 					required : true,
@@ -139,91 +167,137 @@
 				});
 			}
 		});
-
+		
+		// Sign in按钮点击事件
 		$("#loginButton").click(function() {
 			windowType = 1;
 			popUpWindow();
 			$('#loginForm').show();
-			validator.resetForm();
+			loginValidator.resetForm();
 			$('#popupWindowTitle').html("Please sign in");
 		});
-
-		$("#loginSubmitButton").click(function() {
-			if(windowType == 1)
-			{
-				$('#loginForm').submit();
-			}
-			else if(windowType == 2)
-			{
-				$('#newTopicForm').submit();
-			}
-		});
-
-		// 主题相关
-		$("#newTopic").click(function() {
-			popUpWindow();
-			showLoading();
-			$('#popupWindowTitle').html("处理中...");
-			$.ajax({
-				  type: 'POST',
-				  dataType: 'xml',
-				  url: '<c:url value="/user/getloginFlag" />?date=' + new Date(),
-				  success: function(xml) {
-					  		$('#loadingForm').hide();
-					  		var result = $(xml).find("result").text();
-					  		if(result == 'true')
-				  			{
-					  			windowType = 1;
-					  			$('#popupWindowTitle').html("我要分享");
-					  			$('#newTopicForm').show();
-				  			}
-					  		else
-				  			{
-					  			windowType = 1;
-					  			validator.resetForm();
-					  			$('#popupWindowTitle').html("请先登录再发表分享");
-					  			$('#loginForm').show();
-				  			}
-						}
-				});
-		});
 		
-		function loginSubmitHandler(xml) 
-		{
+		// 登录返回结果处理方法
+		function loginSubmitHandler(xml) {
 			var $errorItems = $(xml).find("errorItem");
-			if($errorItems.length == 0)
-			{
+			if ($errorItems.length == 0) {
 				// 登录成功
 				$('#popupWindow').modal("hide");
 				$('#loginButton').hide();
 				$('#myInfo').show();
 				$('#showDisplayName').html($(xml).find("displayName"));
-			}
-	  		else
-			{
-	  			$('#loadingForm').hide();
-	 			// 显示错误消息
-	 			$errorItems.each(function(){
-	 				var obj = new Object();
-	 				obj[$(this).find("propertyName").text()] = $(this).find("errorMessage").text();
-	 				validator.showErrors(obj);
-	 			});
+			} else {
+				$('#loadingForm').hide();
+				// 显示错误消息
+				$errorItems.each(function() {
+					var obj = new Object();
+					obj[$(this).find("propertyName").text()] = $(this).find("errorMessage").text();
+					loginValidator.showErrors(obj);
+				});
 			}
 		}
 		
-		function popUpWindow()
+		// 分享相关验证
+		var topicValidator = $('#newTopicForm').validate({
+			rules : {
+				title : {
+					required : true
+				},
+				picture : {
+					required : true,
+					image : true
+				}
+			},
+			errorClass : 'text-error',
+			submitHandler : function(form) {
+				showLoading();
+				$('#newTopicForm').ajaxSubmit({
+					dataType : 'xml',
+					type : 'post',
+					url : '<c:url value="/topic/add" />',
+					success : topicSubmitHandler
+				});
+			}
+		});
+		
+		// 新增分享返回结果处理方法
+		function topicSubmitHandler(xml) {
+			var $errorItems = $(xml).find("errorItem");
+			if ($errorItems.length == 0) {
+				// 分享成功
+				$('#popupWindow').modal("hide");
+				var imgUrl = $(xml).find("pictures").find("id").text();
+				var newItem = '<div class="thumbnail  item">'+
+					  			'<img src="<c:url value="/topic/getPicture/'+imgUrl+'" />"/>'+
+				  			  	'<div class="caption">'+
+									'<h3>'+$(xml).find("title").text()+'</h3>'+
+									'<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>'+
+									'<p><a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a></p>'+
+				  				'</div>'+
+							  '</div>';
+				$('#wallpull').prepend( $(newItem) ).masonry( 'reload' );
+			} else {
+				$('#loadingForm').hide();
+				// 显示错误消息
+				$errorItems.each(function() {
+					var obj = new Object();
+					obj[$(this).find("propertyName").text()] = $(this).find("errorMessage").text();
+					loginValidator.showErrors(obj);
+				});
+			}
+		}
+
+		// 分享按钮点击事件
+		$("#newTopic").click(
+				function() {
+					popUpWindow();
+					showLoading();
+					$('#popupWindowTitle').html("处理中...");
+					$.ajax({
+						type : 'POST',
+						dataType : 'xml',
+						url : '<c:url value="/user/getloginFlag" />?date=' + new Date(),
+						success : function(xml) {
+							$('#loadingForm').hide();
+							var result = $(xml).find("result").text();
+							if (result == 'true') {
+								windowType = 2;
+								$('#popupWindowTitle').html("我要分享");
+								topicValidator.resetForm();
+								$('#newTopicForm').show();
+							} else {
+								windowType = 1;
+								loginValidator.resetForm();
+								$('#popupWindowTitle').html("请先登录再发表分享");
+								$('#loginForm').show();
+							}
+						}
+					});
+				});
+		
+		topicValidator.showLabel = function(element, message)
 		{
+			if(element.name == "picture")
+				this.showLabelImpl($('#picFile'), message);
+			else
+				this.showLabelImpl(element, message);
+		};
+		
+		$('#picture').change(function(){
+			topicValidator.form();
+		});
+		
+		// 打开弹出框，并重置内容
+		function popUpWindow() {
 			$('#popupWindow').modal();
 			$('#loginForm').hide();
 			$('#newTopicForm').hide();
 			$('#loadingForm').hide();
 		}
-		
-		function showLoading()
-		{
+
+		function showLoading() {
 			$('#loadingForm').show();
 		}
 
 	});
-	
 </script>

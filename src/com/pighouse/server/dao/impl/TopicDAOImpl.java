@@ -13,6 +13,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import com.pighouse.server.constants.Page;
 import com.pighouse.server.dao.TopicDAO;
 import com.pighouse.server.domain.Topic;
+import com.pighouse.server.domain.TopicPicture;
 import com.pighouse.server.domain.TopicType;
 import com.pighouse.server.domain.converter.TopicConverter;
 import com.pighouse.server.domain.vo.TopicVO;
@@ -73,5 +74,25 @@ public class TopicDAOImpl implements TopicDAO {
 	public List<TopicType> getAllTopicTypes() 
 	{
 		return (List<TopicType>) hibernateTemplate.find("from TopicType order by displayOrder");
+	}
+
+	/**
+	 * 新增一个主题
+	 */
+	@Override
+	public Topic addTopic(Topic topic) {
+		hibernateTemplate.save(topic);
+		return topic;
+	}
+
+	@Override
+	public Topic updateTopic(Topic topic) {
+		hibernateTemplate.update(topic);
+		return topic;
+	}
+
+	@Override
+	public TopicPicture getPictureById(int id) {
+		return hibernateTemplate.get(TopicPicture.class, (long)id);
 	}
 }

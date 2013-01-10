@@ -16,8 +16,11 @@
 <script src="<c:url value="/resources/assets/js/jquery.masonry.js" />"></script>
 <script src="<c:url value="/resources/assets/js/jquery.validate.js" />"></script>
 <script src="<c:url value="/resources/assets/js/jquery.form.js" />"></script>
+<script src="<c:url value="/resources/assets/js/bootstrap-fileupload.js" />"></script>
 <!-- Le styles -->
 <link href="<c:url value="/resources/assets/css/bootstrap.css" />"
+	rel="stylesheet">
+<link href="<c:url value="/resources/assets/css/jasny-bootstrap.css" />"
 	rel="stylesheet">
 <link href="<c:url value="/resources/assets/css/waterfall.css" />"
 	rel="stylesheet">
@@ -127,12 +130,11 @@ body {
 			</div>
 		</div>
 	</div>
-
 	<script>
 		// 瀑布流
 		$(function() {
 			$('#wallpull').masonry({
-				itemSelector : '.item',
+				itemSelector : '.item', 
 				isFitWidth : true
 			});
 		});

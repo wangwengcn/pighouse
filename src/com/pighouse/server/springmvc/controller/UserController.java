@@ -8,13 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.pighouse.server.constants.ErrorCodeModel;
 import com.pighouse.server.constants.UserConstant;
 import com.pighouse.server.domain.User;
 import com.pighouse.server.domain.form.SignInCredentialVo;
@@ -23,6 +21,7 @@ import com.pighouse.server.domain.form.SignUpCredentialVo;
 import com.pighouse.server.domain.vo.AjaxResult;
 import com.pighouse.server.domain.vo.ErrorMessage;
 import com.pighouse.server.service.UserService;
+import com.pighouse.server.utils.ErrorUtil;
 import com.pighouse.server.utils.SessionUtil;
 import com.pighouse.server.utils.VOConverter;
 
@@ -168,16 +167,7 @@ public class UserController {
 		if(result.hasErrors())
 		{
 			user = new User();
-			for(ObjectError objectError : result.getAllErrors())
-			{
-				if(objectError instanceof FieldError)
-				{
-					ErrorMessage errorMessage = new ErrorMessage();
-					errorMessage.setPropertyName(((FieldError)objectError).getField());
-					errorMessage.setErrorMessage(objectError.getDefaultMessage());
-					user.addErrorMessage(errorMessage);
-				}
-			}
+			ErrorUtil.dealWithBindErrors(user, result);
 			return user;
 		}
 		else 
@@ -189,7 +179,7 @@ public class UserController {
 				user = new User();
 				ErrorMessage errorMessage = new ErrorMessage();
 				errorMessage.setPropertyName("email");
-				errorMessage.setErrorMessage(ErrorCodeModel.ACCOUNT_NOT_EXIST);
+				errorMessage.setErrorMessage(ErrorUtil.ACCOUNT_NOT_EXIST);
 				user.addErrorMessage(errorMessage);
 				return user;
 			}
@@ -200,7 +190,7 @@ public class UserController {
 				{
 					ErrorMessage errorMessage = new ErrorMessage();
 					errorMessage.setPropertyName("password");
-					errorMessage.setErrorMessage(ErrorCodeModel.PASSWORD_NOT_MATCH);
+					errorMessage.setErrorMessage(ErrorUtil.PASSWORD_NOT_MATCH);
 					user.addErrorMessage(errorMessage);
 					return user;
 				}
