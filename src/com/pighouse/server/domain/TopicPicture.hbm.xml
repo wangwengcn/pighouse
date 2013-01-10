@@ -9,6 +9,8 @@
 		<property name="fileName" type="string" column="FILE_NAME"/>
 		<property name="content" type="blob" column="CONTENT" />
 		<property name="size" type="long" column="SIZE"/>
+		<property name="width" type="int" column="WIDTH"/>
+		<property name="height" type="int" column="HEIGHT"/>
 		<many-to-one name="topic" column="TOPIC_ID"
 			class="com.pighouse.server.domain.Topic" not-null="false"/>
 	</class>

@@ -226,9 +226,16 @@
 			if ($errorItems.length == 0) {
 				// 分享成功
 				$('#popupWindow').modal("hide");
-				var imgUrl = $(xml).find("pictures").find("id").text();
+				var imgId = $(xml).find("pictures").find("id").text();
+				var height = $(xml).find("pictures").find("height").text();
+				var width = $(xml).find("pictures").find("width").text();
+				if(width > 200)
+				{
+					height = height*200/width;
+					width = 200;
+				}
 				var newItem = '<div class="thumbnail  item">'+
-					  			'<img src="<c:url value="/topic/getPicture/'+imgUrl+'" />"/>'+
+					  			'<img style="width: '+width+'px; height:  '+height+'px;" src="<c:url value="/topic/getPicture/'+imgId+'" />"/>'+
 				  			  	'<div class="caption">'+
 									'<h3>'+$(xml).find("title").text()+'</h3>'+
 									'<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>'+

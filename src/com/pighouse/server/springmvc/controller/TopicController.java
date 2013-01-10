@@ -1,5 +1,7 @@
 package com.pighouse.server.springmvc.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.OutputStream;
 import java.sql.Blob;
 import java.util.Date;
@@ -7,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -68,10 +71,13 @@ public class TopicController {
 				topic.addErrorMessage(ErrorUtil.createErrorMessage("picFile", "请确保文件小于2M"));
 				return topic;
 			}
+			BufferedImage img = ImageIO.read(new ByteArrayInputStream(picture.getBytes()));
 			TopicPicture topicPicture = new TopicPicture();
 			topicPicture.setSize(picture.getSize());
 			topicPicture.setFileName(picture.getOriginalFilename());
 			topicPicture.setContent(Hibernate.createBlob(picture.getBytes()));
+			topicPicture.setHeight(img.getHeight());
+			topicPicture.setWidth(img.getWidth());
 			Set<TopicPicture> set = new HashSet<TopicPicture>();
 			set.add(topicPicture);
 			
