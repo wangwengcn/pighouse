@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Set;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.pighouse.server.domain.vo.AjaxResult;
 
@@ -68,6 +69,7 @@ public class User extends AjaxResult {
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
+	@XmlTransient
 	public String getPassword() {
 		return password;
 	}

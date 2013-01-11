@@ -59,16 +59,21 @@ public class TopicController {
 			topic.addErrorMessage(ErrorUtil.createErrorMessage("title", "请登录后再发分享图片"));
 			return topic;
 		}
+		if(null == picture)
+		{
+			topic.addErrorMessage(ErrorUtil.createErrorMessage("picture", "请选择合法的图片格式"));
+			return topic;
+		}
 		if(result.hasErrors())
 		{
-			ErrorUtil.dealWithBindErrors(topic, result, new String[]{"picture"}, new String[]{"picFile"});
+			ErrorUtil.dealWithBindErrors(topic, result);
 			return topic;
 		}
 		else 
 		{
-			if(picture.getSize() > 2*1024*1024)
+			if(picture.getSize() > 3*1024*1024)
 			{
-				topic.addErrorMessage(ErrorUtil.createErrorMessage("picFile", "请确保文件小于2M"));
+				topic.addErrorMessage(ErrorUtil.createErrorMessage("picture", "请确保文件小于3M"));
 				return topic;
 			}
 			BufferedImage img = ImageIO.read(new ByteArrayInputStream(picture.getBytes()));
@@ -85,6 +90,7 @@ public class TopicController {
 			topic.setCreateTime(currDate);
 			topic.setLastUpdateTime(currDate);
 			topic.setPictures(set);
+			topic.setCreateUser(SessionUtil.getloginUser(request));
 			
 			topicPicture.setTopic(topic);
 			topic = topicService.addTopic(topic);

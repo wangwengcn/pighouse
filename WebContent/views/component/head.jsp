@@ -201,7 +201,8 @@
 		var topicValidator = $('#newTopicForm').validate({
 			rules : {
 				title : {
-					required : true
+					required : true,
+					maxlength : 10
 				},
 				picture : {
 					required : true,
@@ -210,13 +211,22 @@
 			},
 			errorClass : 'text-error',
 			submitHandler : function(form) {
-				showLoading();
-				$('#newTopicForm').ajaxSubmit({
-					dataType : 'xml',
-					type : 'post',
-					url : '<c:url value="/topic/add" />',
-					success : topicSubmitHandler
-				});
+				if($('#picture').val().length == 0)
+				{
+					var obj = new Object();
+					obj["picture"] = "请选择合法的图片格式";
+					topicValidator.showErrors(obj);
+				}
+				else
+				{
+					showLoading();
+					$('#newTopicForm').ajaxSubmit({
+						dataType : 'xml',
+						type : 'post',
+						url : '<c:url value="/topic/add" />',
+						success : topicSubmitHandler
+					});
+				}
 			}
 		});
 		
@@ -234,12 +244,34 @@
 					height = height*200/width;
 					width = 200;
 				}
-				var newItem = '<div class="thumbnail  item">'+
+				var newItem = '<div class="thumbnail item">'+
 					  			'<img style="width: '+width+'px; height:  '+height+'px;" src="<c:url value="/topic/getPicture/'+imgId+'" />"/>'+
-				  			  	'<div class="caption">'+
-									'<h3>'+$(xml).find("title").text()+'</h3>'+
-									'<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>'+
-									'<p><a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a></p>'+
+				  			  	'<div class="caption font-size-13" style="padding:0px">'+
+									'<h5>'+$(xml).find("title").text()+'</h5>'+
+									'<ul class="rep_list font-size-13">'+
+									'<li>'+
+										'<p>'+
+											'<img src="<c:url value="/resources/assets/img/unuser24.jpg" />">&nbsp;'+
+											'<a href="/u/114lcya" target="_blank">'+$(xml).find("createUser").find("displayName").text()+'</a>加入分享'+
+										'</p>'+
+									'</li>'+
+									'<li>'+
+										'<p>'+
+											'<img src="<c:url value="/resources/assets/img/unuser24.jpg" />">&nbsp;'+
+											'<a href="/u/114lcya" target="_blank">张三</a>：很漂亮。。'+
+										'</p>'+
+									'</li>'+
+									'<li>'+
+										'<p>'+
+											'<img src="<c:url value="/resources/assets/img/unuser24.jpg" />">&nbsp;'+
+											'<a href="/u/114lcya" target="_blank">李四</a>：我要买一件。。'+
+										'</p>'+
+									'</li>'+
+								'</ul>'+
+								'<div class="text-center">'+
+									'<a class="btn btn-danger btn-small" href="#"><i class="icon-heart icon-white"></i>&nbsp;喜欢</a>&nbsp;'+
+									'<a class="btn btn-primary btn-small" href="#"><i class="icon-pencil icon-white"></i>&nbsp;评论</a>'+
+								'</div>'+
 				  				'</div>'+
 							  '</div>';
 				$('#wallpull').prepend( $(newItem) ).masonry( 'reload' );
@@ -249,7 +281,7 @@
 				$errorItems.each(function() {
 					var obj = new Object();
 					obj[$(this).find("propertyName").text()] = $(this).find("errorMessage").text();
-					loginValidator.showErrors(obj);
+					topicValidator.showErrors(obj);
 				});
 			}
 		}

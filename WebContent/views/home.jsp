@@ -16,7 +16,8 @@
 <script src="<c:url value="/resources/assets/js/jquery.masonry.js" />"></script>
 <script src="<c:url value="/resources/assets/js/jquery.validate.js" />"></script>
 <script src="<c:url value="/resources/assets/js/jquery.form.js" />"></script>
-<script src="<c:url value="/resources/assets/js/bootstrap-fileupload.js" />"></script>
+<script
+	src="<c:url value="/resources/assets/js/bootstrap-fileupload.js" />"></script>
 <!-- Le styles -->
 <link href="<c:url value="/resources/assets/css/bootstrap.css" />"
 	rel="stylesheet">
@@ -24,6 +25,9 @@
 	rel="stylesheet">
 <link href="<c:url value="/resources/assets/css/waterfall.css" />"
 	rel="stylesheet">
+<link
+	href="<c:url value="/resources/assets/css/bootstrap-responsive.css" />"
+	rel="stylesheet" />
 <style type="text/css">
 body {
 	padding-top: 60px;
@@ -31,42 +35,41 @@ body {
 	min-width: 920px;
 }
 </style>
-<link
-	href="<c:url value="/resources/assets/css/bootstrap-responsive.css" />"
-	rel="stylesheet">
 </head>
 
 <body>
 	<jsp:include page="component/head.jsp"></jsp:include>
 	<div id="wallpull" class="transitions-enabled centered clearfix">
-		<div class="thumbnail  item">
-			<img alt="300x200" data-src="holder.js/300x200"
-				style="width: 300px; height: 200px;"
-				src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAADICAYAAABS39xVAAAE0klEQVR4nO3bwWrqQACG0b7/o+QlssvGTcBFEAQRRCQLXyF3FZnE2NZybf3DWZxNnNrZ5GMyTj6u1+sAkODjrycA8F2CBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYK1E3/dD13VDXddDVVVDVVXDdrsdLpfL4vj9fj80TTNUVTU0TTPs9/uH3/3M2J/Ot67rt54v70GwVqDv+0mo5k6n02R813WL47quu/vuZ8Z+1+VyeTjfuq7vovXX8+V9CNYKbLfb24252+2G6/U6HI/H27WmaW5jz+fzZAU2//vz+fyjsT+d77j6ORwOd//rXebL+xCsFei6bmjbdqjrenK9XGGUY+c3cHmjlyuR7469XC63a5vNZjKHzWZz+2xcObVte3tk+4v5kkuwVmq/3y/eqGVAyvFLwXlmbPn/DofD3bXv7CMtBetV8yWTYK1Q27Z3j4ijpSg8uv7M2Ov1els11XU9WdmUj6SPlHErw/LK+ZJHsFaovEHL/aD5Z19dfzYAZaRKX+0dlY+UVVUNx+PxV+ZLHsFaqXITu1xlvToAu91u8vl8hTc3/8Vw/tgmWJQEa8XGm7TcjH91AOarrL7vP53j+Bg5znN+pEGwKAnWii3dqK/exC73z6rq81/myiMHS7H6jfmSRbBWoG3b281aXh9v1HLT+5XHBMqzX+Vj3tIeVvnI+ihWr54veQRrBcqVynikoAxCeaTglQcxx0g1TTM5fT//lbDv+8kqbJzzEgdHKQnWCnz2as7SY9ArXnUpN9vHX/keRfPRdz7aa/JqDiPBWon5y8RfvfR7Op1uq4+2bSdHCZ4dWx5LaNt28tnSSffP3nt8tDn+P+dLLsECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAEx/gGqz/KbVlcJ6AAAAABJRU5ErkJggg==">
-			<div class="caption">
-				<h3>Thumbnail label</h3>
-				<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-					Donec id elit non mi porta gravida at eget metus. Nullam id dolor
-					id nibh ultricies vehicula ut id elit.</p>
-				<p>
-					<a class="btn btn-primary" href="#">Action</a> <a class="btn"
-						href="#">Action</a>
-				</p>
-			</div>
-		</div>
 		<div class="thumbnail item">
-			<img alt="300x200" data-src="holder.js/300x200"
-				style="width: 300px; height: 200px;"
-				src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAADICAYAAABS39xVAAAE0klEQVR4nO3bwWrqQACG0b7/o+QlssvGTcBFEAQRRCQLXyF3FZnE2NZybf3DWZxNnNrZ5GMyTj6u1+sAkODjrycA8F2CBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYK1E3/dD13VDXddDVVVDVVXDdrsdLpfL4vj9fj80TTNUVTU0TTPs9/uH3/3M2J/Ot67rt54v70GwVqDv+0mo5k6n02R813WL47quu/vuZ8Z+1+VyeTjfuq7vovXX8+V9CNYKbLfb24252+2G6/U6HI/H27WmaW5jz+fzZAU2//vz+fyjsT+d77j6ORwOd//rXebL+xCsFei6bmjbdqjrenK9XGGUY+c3cHmjlyuR7469XC63a5vNZjKHzWZz+2xcObVte3tk+4v5kkuwVmq/3y/eqGVAyvFLwXlmbPn/DofD3bXv7CMtBetV8yWTYK1Q27Z3j4ijpSg8uv7M2Ov1els11XU9WdmUj6SPlHErw/LK+ZJHsFaovEHL/aD5Z19dfzYAZaRKX+0dlY+UVVUNx+PxV+ZLHsFaqXITu1xlvToAu91u8vl8hTc3/8Vw/tgmWJQEa8XGm7TcjH91AOarrL7vP53j+Bg5znN+pEGwKAnWii3dqK/exC73z6rq81/myiMHS7H6jfmSRbBWoG3b281aXh9v1HLT+5XHBMqzX+Vj3tIeVvnI+ihWr54veQRrBcqVynikoAxCeaTglQcxx0g1TTM5fT//lbDv+8kqbJzzEgdHKQnWCnz2as7SY9ArXnUpN9vHX/keRfPRdz7aa/JqDiPBWon5y8RfvfR7Op1uq4+2bSdHCZ4dWx5LaNt28tnSSffP3nt8tDn+P+dLLsECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAExBAuIIVhADMECYggWEEOwgBiCBcQQLCCGYAEx/gGqz/KbVlcJ6AAAAABJRU5ErkJggg==">
-			<div class="caption">
-				<h3>Thumbnail label</h3>
-				<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-					Donec id elit non mi porta gravida at eget metus. Nullam id dolor
-					id nibh ultricies vehicula ut id elit.</p>
-				<p>
-					<a class="btn btn-primary" href="#">Action</a> <a class="btn"
-						href="#">Action</a>
-				</p>
+			<img src="/pighouse1/topic/getPicture/47">
+			<div class="caption" style="padding: 0px">
+				<h5>型格大衣</h5>
+				<ul class="rep_list font-size-13">
+					<li>
+						<p>
+							<img src="<c:url value="/resources/assets/img/unuser24.jpg" />">
+							<a href="/u/114lcya" target="_blank">天亮说晚安</a>加入分享
+						</p>
+					</li>
+					<li>
+						<p>
+							<img src="<c:url value="/resources/assets/img/unuser24.jpg" />">
+							<a href="/u/114lcya" target="_blank">张三</a>：很漂亮。。
+						</p>
+					</li>
+					<li>
+						<p>
+							<img src="<c:url value="/resources/assets/img/unuser24.jpg" />">
+							<a href="/u/114lcya" target="_blank">李四</a>：我要买一件。。
+						</p>
+					</li>
+				</ul>
+				<div class="text-center ">
+					<a class="btn btn-danger btn-small" href="#"><i
+						class="icon-heart icon-white"></i>&nbsp;喜欢</a>
+					<a class="btn btn-primary btn-small" href="#"><i
+						class="icon-pencil icon-white"></i>&nbsp;评论</a>
+				</div>
 			</div>
 		</div>
 		<div class="thumbnail item">
@@ -134,7 +137,7 @@ body {
 		// 瀑布流
 		$(function() {
 			$('#wallpull').masonry({
-				itemSelector : '.item', 
+				itemSelector : '.item',
 				isFitWidth : true
 			});
 		});
