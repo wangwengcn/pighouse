@@ -109,7 +109,7 @@ public class TopicController {
 	@RequestMapping(value="/getPicture/{pictureId}" ,  method = RequestMethod.GET)
 	public void getPicture(@PathVariable String pictureId, HttpServletResponse response, ModelMap modelMap) throws Exception
 	{
-		response.setContentType("image/gif");
+		response.setContentType("image/jpg");
 		try{
 			int id = Integer.valueOf(pictureId);
 			TopicPicture picture = topicService.getPictureById(id);

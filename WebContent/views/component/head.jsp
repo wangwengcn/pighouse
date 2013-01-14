@@ -245,7 +245,9 @@
 					width = 200;
 				}
 				var newItem = '<div class="thumbnail item">'+
-					  			'<img style="width: '+width+'px; height:  '+height+'px;" src="<c:url value="/topic/getPicture/'+imgId+'" />"/>'+
+								'<a class="bigPicture" href="<c:url value="/topic/getPicture/'+imgId+'" />" title="'+$(xml).find("title").text()+'">'+
+					  				'<img style="width: '+width+'px; height:  '+height+'px;" src="<c:url value="/topic/getPicture/'+imgId+'" />"/>'+
+					  			'</a>'+
 				  			  	'<div class="caption font-size-13" style="padding:0px">'+
 									'<h5>'+$(xml).find("title").text()+'</h5>'+
 									'<ul class="rep_list font-size-13">'+
@@ -275,6 +277,11 @@
 				  				'</div>'+
 							  '</div>';
 				$('#wallpull').prepend( $(newItem) ).masonry( 'reload' );
+				// 查看大图
+				$(".bigPicture").colorbox({
+					opacity : 0.2,
+					photo:true
+				});
 			} else {
 				$('#loadingForm').hide();
 				// 显示错误消息
