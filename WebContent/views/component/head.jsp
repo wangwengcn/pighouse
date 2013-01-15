@@ -28,7 +28,26 @@
 							<li><a href="#">One more separated link</a></li>
 						</ul></li>
 				</ul>
-				
+				<div class="navbar-form pull-right">
+					<button id="newTopic" class="btn btn-primary">分享</button>
+					<button id="loginButton"
+						<%=currUser != null ? "style='display:none'" : ""%>
+						class="btn btn-danger">Sign in</button>
+					<div id="myInfo"
+						<%=currUser == null ? "style='display:none'" : ""%>
+						class="btn-group">
+						<button data-toggle="dropdown"
+							class="btn btn-success dropdown-toggle">
+							<i class="icon-user icon-white"></i> <span id="showDisplayName"><%=currUser != null ? currUser.getDisplayName() : ""%></span>
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li><a href="#">我的头像</a></li>
+							<li class="divider"></li>
+							<li><a href="<c:url value="/user/logout" />">退出登录</a></li>
+						</ul>
+					</div>
+				</div>
 			</div>
 			<!--/.nav-collapse -->
 		</div>
