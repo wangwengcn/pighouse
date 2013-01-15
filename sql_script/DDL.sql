@@ -39,6 +39,8 @@ create table TOPIC_TYPE
 )default charset=utf8;
 
 --TOPIC_PICTURE
+drop table TOPIC_PICTURE;
+
 CREATE TABLE TOPIC_PICTURE
 (
     ID int PRIMARY KEY AUTO_INCREMENT,

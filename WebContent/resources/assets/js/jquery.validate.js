@@ -1122,7 +1122,7 @@ $.extend($.validator, {
 		},
 		
 		image: function(value, element) {
-			return this.optional(element) || /(?:gif|jpg|png|bmp)$/.test(value);
+			return this.optional(element) || /(?:gif|jpg|png|bmp|GIF|JPG|PNG|BMP)$/.test(value);
 		},
 
 		// http://docs.jquery.com/Plugins/Validation/Methods/creditcard
