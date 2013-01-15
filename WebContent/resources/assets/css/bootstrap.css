@@ -228,7 +228,6 @@ body {
   line-height: 20px;
   color: #333333;
   background-color: #ffffff;
-  background-image: url("../img/paper.jpg")
 }
 
 a {
@@ -4496,10 +4495,6 @@ input[type="submit"].btn.btn-mini {
 
 .navbar-fixed-top {
   top: 0;
-}
-
-.navbar-fixed-top40 {
-  top: 40px;
 }
 
 .navbar-fixed-top .navbar-inner,

@@ -32,6 +32,7 @@ public final class TopicConverter{
 			 .setCreateTime(t.getCreateTime());
 		topic.setComments(list);
 		topic.setCommentNumber(i);
+		topic.setPictures(t.getPictures());
 		return topic;
 	}
 	

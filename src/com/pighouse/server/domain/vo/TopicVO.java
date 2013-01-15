@@ -2,19 +2,33 @@ package com.pighouse.server.domain.vo;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import com.pighouse.server.domain.Comment;
+import com.pighouse.server.domain.TopicPicture;
 import com.pighouse.server.domain.User;
+import com.pighouse.server.utils.JaxbDateAdapter;
 
-public class TopicVO {
+@XmlRootElement(name="topic")
+public class TopicVO extends AjaxResult{
 	
 	private String title;
 	private User createUser;
 	private Date createTime;
 	private Date lastUpdateTime;
 	private List<Comment> comments;
+	private Set<TopicPicture> pictures;
 	private int commentNumber;
 	
+	public Set<TopicPicture> getPictures() {
+		return pictures;
+	}
+	public void setPictures(Set<TopicPicture> pictures) {
+		this.pictures = pictures;
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -29,6 +43,7 @@ public class TopicVO {
 		this.createUser = createUser;
 		return this;
 	}
+	@XmlJavaTypeAdapter(JaxbDateAdapter.class)
 	public Date getCreateTime() {
 		return createTime;
 	}

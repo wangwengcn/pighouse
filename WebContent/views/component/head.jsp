@@ -8,7 +8,7 @@
 %>
 <div class="navbar navbar-inverse navbar-fixed-top">
 	<div class="navbar-inner">
-		<div class="container containerWrapper">
+		<div class="container containerWrapper" style="min-width: 920px;">
 			<a class="btn btn-navbar" data-toggle="collapse"
 				data-target=".nav-collapse"> <span class="icon-bar"></span> <span
 				class="icon-bar"></span> <span class="icon-bar"></span>
@@ -28,26 +28,7 @@
 							<li><a href="#">One more separated link</a></li>
 						</ul></li>
 				</ul>
-				<div class="navbar-form pull-right">
-					<button id="newTopic" class="btn btn-primary">分享</button>
-					<button id="loginButton"
-						<%=currUser != null ? "style='display:none'" : ""%>
-						class="btn btn-danger">Sign in</button>
-					<div id="myInfo"
-						<%=currUser == null ? "style='display:none'" : ""%>
-						class="btn-group">
-						<button data-toggle="dropdown"
-							class="btn btn-success dropdown-toggle">
-							<i class="icon-user icon-white"></i> <span id="showDisplayName"><%=currUser != null ? currUser.getDisplayName() : ""%></span>
-							<span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu">
-							<li><a href="#">我的头像</a></li>
-							<li class="divider"></li>
-							<li><a href="<c:url value="/user/logout" />">退出登录</a></li>
-						</ul>
-					</div>
-				</div>
+				
 			</div>
 			<!--/.nav-collapse -->
 		</div>
@@ -236,46 +217,7 @@
 			if ($errorItems.length == 0) {
 				// 分享成功
 				$('#popupWindow').modal("hide");
-				var imgId = $(xml).find("pictures").find("id").text();
-				var height = $(xml).find("pictures").find("height").text();
-				var width = $(xml).find("pictures").find("width").text();
-				if(width > 200)
-				{
-					height = height*200/width;
-					width = 200;
-				}
-				var $newItem = $('<div class="thumbnail item">'+
-									'<a class="bigPicture" href="<c:url value="/topic/getPicture/'+imgId+'" />" title="'+$(xml).find("title").text()+'">'+
-						  				'<img style="width: '+width+'px; height:  '+height+'px;" src="<c:url value="/topic/getPicture/'+imgId+'" />"/>'+
-						  			'</a>'+
-					  			  	'<div class="caption font-size-13" style="padding:0px">'+
-										'<h5>'+$(xml).find("title").text()+'</h5>'+
-										'<ul class="rep_list font-size-13">'+
-										'<li>'+
-											'<p>'+
-												'<img src="<c:url value="/resources/assets/img/unuser24.jpg" />">&nbsp;'+
-												'<a href="/u/114lcya" target="_blank">'+$(xml).find("createUser").find("displayName").text()+'</a>加入分享'+
-											'</p>'+
-										'</li>'+
-										'<li>'+
-											'<p>'+
-												'<img src="<c:url value="/resources/assets/img/unuser24.jpg" />">&nbsp;'+
-												'<a href="/u/114lcya" target="_blank">张三</a>：很漂亮。。'+
-											'</p>'+
-										'</li>'+
-										'<li>'+
-											'<p>'+
-												'<img src="<c:url value="/resources/assets/img/unuser24.jpg" />">&nbsp;'+
-												'<a href="/u/114lcya" target="_blank">李四</a>：我要买一件。。'+
-											'</p>'+
-										'</li>'+
-									'</ul>'+
-									'<div class="text-center">'+
-										'<a class="btn btn-danger btn-small" href="#"><i class="icon-heart icon-white"></i>&nbsp;喜欢</a>&nbsp;'+
-										'<a class="btn btn-primary btn-small" href="#"><i class="icon-pencil icon-white"></i>&nbsp;评论</a>'+
-									'</div>'+
-					  				'</div>'+
-								  '</div>');
+				
 				$('#wallpull').prepend( $newItem ).masonry( 'reload' );
 				// 查看大图
 				$newItem.children(".bigPicture").colorbox({
