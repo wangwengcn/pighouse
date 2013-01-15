@@ -20,6 +20,12 @@ import com.pighouse.server.domain.vo.TopicVO;
 
 public class TopicDAOImpl implements TopicDAO {
 	
+	private static final String GET_TOPICS_BY_LASTUPDATETIME = "from Topic t " +
+			"left join fetch t.comments " +
+			"left join fetch t.pictures " +
+			"left join fetch t.createUser " +
+			"order by t.lastUpdateTime desc";
+	
 	@Autowired
 	private HibernateTemplate hibernateTemplate;
 
@@ -34,7 +40,7 @@ public class TopicDAOImpl implements TopicDAO {
 			@Override
 			public List<Topic> doInHibernate(Session session) throws HibernateException,SQLException 
 			{
-				Query q = session.createQuery("from Topic t order by t.lastUpdateTime desc");
+				Query q = session.createQuery(GET_TOPICS_BY_LASTUPDATETIME);
 				q.setFirstResult((pageNumber - 1) * Page.pageSize);
 				q.setMaxResults(Page.pageSize);
 				List<Topic> list = q.list();

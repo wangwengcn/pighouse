@@ -25,7 +25,7 @@ public class AjaxResult {
 		this.result = result;
 		this.errorCode = errorCode;
 	}
-	
+
 	@XmlElement(name = "errorItem")
 	public List<ErrorMessage> getErrorMessages() {
 		return errorMessages;

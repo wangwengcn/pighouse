@@ -3,16 +3,9 @@ package com.pighouse.server.domain;
 import java.util.Date;
 import java.util.Set;
 
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.pighouse.server.domain.vo.AjaxResult;
-import com.pighouse.server.utils.JaxbDateAdapter;
-
-@XmlRootElement(name="Topic")
-public class Topic extends AjaxResult{
+public class Topic{
 	
 	private Long id;
 	@NotBlank
@@ -68,7 +61,6 @@ public class Topic extends AjaxResult{
 	public void setCreateUser(User createUser) {
 		this.createUser = createUser;
 	}
-	@XmlJavaTypeAdapter(JaxbDateAdapter.class)
 	public Date getCreateTime() {
 		return createTime;
 	}

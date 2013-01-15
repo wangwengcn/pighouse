@@ -28,7 +28,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.pighouse.server.constants.UserConstant;
 import com.pighouse.server.domain.Topic;
 import com.pighouse.server.domain.TopicPicture;
+import com.pighouse.server.domain.vo.AjaxResult;
 import com.pighouse.server.domain.vo.TopicVO;
+import com.pighouse.server.domain.vo.TopicVOList;
 import com.pighouse.server.service.TopicService;
 import com.pighouse.server.utils.ErrorUtil;
 import com.pighouse.server.utils.SessionUtil;
@@ -52,29 +54,30 @@ public class TopicController {
 	
 	@SuppressWarnings("deprecation")
 	@RequestMapping(value="/add" ,  method = RequestMethod.POST)
-	public @ResponseBody Topic add(@Valid Topic topic, BindingResult result, MultipartFile picture, HttpServletRequest request) throws Exception
+	public @ResponseBody TopicVO add(@Valid Topic topic, BindingResult result, MultipartFile picture, HttpServletRequest request) throws Exception
 	{
+		TopicVO topicvo = new TopicVO();
 		if(SessionUtil.getAttribute(UserConstant.LOGIN_USER, request) == null)
 		{
-			topic.addErrorMessage(ErrorUtil.createErrorMessage("title", "请登录后再发分享图片"));
-			return topic;
+			topicvo.addErrorMessage(ErrorUtil.createErrorMessage("title", "请登录后再发分享图片"));
+			return topicvo;
 		}
 		if(null == picture)
 		{
-			topic.addErrorMessage(ErrorUtil.createErrorMessage("picture", "请选择合法的图片格式"));
-			return topic;
+			topicvo.addErrorMessage(ErrorUtil.createErrorMessage("picture", "请选择合法的图片格式"));
+			return topicvo;
 		}
 		if(result.hasErrors())
 		{
-			ErrorUtil.dealWithBindErrors(topic, result);
-			return topic;
+			ErrorUtil.dealWithBindErrors(topicvo, result);
+			return topicvo;
 		}
 		else 
 		{
 			if(picture.getSize() > 3*1024*1024)
 			{
-				topic.addErrorMessage(ErrorUtil.createErrorMessage("picture", "请确保文件小于3M"));
-				return topic;
+				topicvo.addErrorMessage(ErrorUtil.createErrorMessage("picture", "请确保文件小于3M"));
+				return topicvo;
 			}
 			BufferedImage img = ImageIO.read(new ByteArrayInputStream(picture.getBytes()));
 			TopicPicture topicPicture = new TopicPicture();
@@ -93,23 +96,25 @@ public class TopicController {
 			topic.setCreateUser(SessionUtil.getloginUser(request));
 			
 			topicPicture.setTopic(topic);
-			topic = topicService.addTopic(topic);
+			topicvo = topicService.addTopic(topic);
 		}
-		return topic;
+		return topicvo;
 	}
 
-	@RequestMapping(value="/getTopics" ,  method = RequestMethod.GET)
-	public @ResponseBody List<TopicVO> getTopics(Integer page, HttpServletRequest request, ModelMap modelMap) throws Exception
+	@RequestMapping(value="/getTopics" ,  method = RequestMethod.POST)
+	public @ResponseBody TopicVOList getTopics(Integer page, HttpServletRequest request, ModelMap modelMap) throws Exception
 	{
 		page = page == null? 1 : page;
 		List<TopicVO> list = topicService.getTopicsByLastUpdateTime(page);
-		return list;
+		TopicVOList result = new TopicVOList();
+		result.setList(list);
+		return result;
 	}
 	
 	@RequestMapping(value="/getPicture/{pictureId}" ,  method = RequestMethod.GET)
 	public void getPicture(@PathVariable String pictureId, HttpServletResponse response, ModelMap modelMap) throws Exception
 	{
-		response.setContentType("image/gif");
+		response.setContentType("image/jpg");
 		try{
 			int id = Integer.valueOf(pictureId);
 			TopicPicture picture = topicService.getPictureById(id);

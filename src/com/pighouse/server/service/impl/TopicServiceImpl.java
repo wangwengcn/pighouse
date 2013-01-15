@@ -8,6 +8,7 @@ import com.pighouse.server.dao.TopicDAO;
 import com.pighouse.server.domain.Topic;
 import com.pighouse.server.domain.TopicPicture;
 import com.pighouse.server.domain.TopicType;
+import com.pighouse.server.domain.converter.TopicConverter;
 import com.pighouse.server.domain.vo.TopicVO;
 import com.pighouse.server.service.TopicService;
 
@@ -33,8 +34,8 @@ public class TopicServiceImpl implements TopicService{
 	}
 
 	@Override
-	public Topic addTopic(Topic topic) {
-		return topicDAO.addTopic(topic);
+	public TopicVO addTopic(Topic topic) {
+		return TopicConverter.converter(topicDAO.addTopic(topic));
 	}
 
 	@Override

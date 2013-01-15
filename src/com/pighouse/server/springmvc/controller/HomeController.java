@@ -12,4 +12,10 @@ public class HomeController {
 	{
 		return "home";
 	}
+	
+	@RequestMapping("/test")
+	public String test(ModelMap modelMap)
+	{
+		return "test";
+	}
 }
