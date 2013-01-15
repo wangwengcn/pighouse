@@ -13,7 +13,8 @@ var topicOp = {
 		this.container = _container;
 		this.container.masonry({
 			itemSelector : '.item',
-			isFitWidth : true
+			isFitWidth : true,
+			isAnimated: true
 		});
 		this.loadData();
 	},

@@ -52,7 +52,7 @@ body {
 		$(function() {
 			$("#loading").hide();
 			// 初始化
-			topicOp.init('/pighouse1/', $('#wallpull'));
+			topicOp.init('/pighouse/', $('#wallpull'));
 			
 			
 			// load data for page
