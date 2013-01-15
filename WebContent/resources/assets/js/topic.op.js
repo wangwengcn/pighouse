@@ -58,10 +58,10 @@ var topicOp = {
     		var $newElems = $(newElems);
     		// hide new items while they are loading
     		topicOp.container.append( $newElems );
-    		if(initial)
+    		if(this.initial)
     		{
     			topicOp.container.masonry( 'appended', $newElems, true).resize();
-    			initial = false;
+    			this.initial = false;
     		}
     		else
     			topicOp.container.masonry( 'appended', $newElems, true);
