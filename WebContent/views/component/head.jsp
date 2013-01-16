@@ -32,7 +32,7 @@
 					<button id="newTopic" class="btn btn-primary">分享</button>
 					<button id="loginButton"
 						<%=currUser != null ? "style='display:none'" : ""%>
-						class="btn btn-danger">Sign in</button>
+						class="btn btn-danger">登录</button>
 					<div id="myInfo"
 						<%=currUser == null ? "style='display:none'" : ""%>
 						class="btn-group">
@@ -168,13 +168,13 @@
 			}
 		});
 		
-		// Sign in按钮点击事件
+		// 登录按钮点击事件
 		$("#loginButton").click(function() {
 			windowType = 1;
 			popUpWindow();
 			$('#loginForm').show();
 			loginValidator.resetForm();
-			$('#popupWindowTitle').html("Please sign in");
+			$('#popupWindowTitle').html("请登录");
 		});
 		
 		// 登录返回结果处理方法

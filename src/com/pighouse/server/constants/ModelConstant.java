@@ -9,5 +9,8 @@ public class ModelConstant {
 	public static final String RESULT_SUCCESS_STRING = "true";
 	
 	public static final String RESULT_FALSE_STRING = "false";
+	
+	// 配置在一个瀑布流块中最多显示评论的数量
+	public static int MAX_NUMBER_COMMMENTS_SHOW_IN_PAGE = 3;
 
 }

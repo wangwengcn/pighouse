@@ -3,35 +3,34 @@ package com.pighouse.server.domain.converter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.pighouse.server.constants.ModelConstant;
 import com.pighouse.server.domain.Comment;
 import com.pighouse.server.domain.Topic;
+import com.pighouse.server.domain.vo.CommentVO;
 import com.pighouse.server.domain.vo.TopicVO;
 
 public final class TopicConverter{
 	
-	private static int MAX_NUMBER_COMMMENTS_SHOW_IN_PAGE = 3;
-	
 	public static TopicVO converter(Topic t)
 	{
-		ArrayList<Comment> list = new ArrayList<Comment>();
-		int i = 0;
+		ArrayList<CommentVO> list = new ArrayList<CommentVO>();
 		for(Comment comment : t.getComments())
 		{
-			list.add(comment);
-			i++;
-			if(i == MAX_NUMBER_COMMMENTS_SHOW_IN_PAGE)
+			list.add(CommentConverter.converter(comment));
+			if(list.size() == ModelConstant.MAX_NUMBER_COMMMENTS_SHOW_IN_PAGE)
 			{
 				break;
 			}
 		}
 		
 		TopicVO topic = new TopicVO();
+		topic.setId(t.getId().toString());
 		topic.setTitle(t.getTitle())
 			 .setLastUpdateTime(t.getLastUpdateTime())
 			 .setCreateUser(t.getCreateUser())
 			 .setCreateTime(t.getCreateTime());
 		topic.setComments(list);
-		topic.setCommentNumber(i);
+		topic.setCommentNumber(t.getComments().size());
 		topic.setPictures(t.getPictures());
 		return topic;
 	}

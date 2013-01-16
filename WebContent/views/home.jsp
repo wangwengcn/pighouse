@@ -13,7 +13,7 @@
 <script src="<c:url value="/resources/assets/js/jquery.masonry.js" />"></script>
 <script src="<c:url value="/resources/assets/js/jquery.validate.js" />"></script>
 <script src="<c:url value="/resources/assets/js/jquery.form.js" />"></script>
-<script src="<c:url value="/resources/assets/js/jquery.colorbox.js" />"></script>
+<script src="<c:url value="/resources/assets/js/jquery.fancybox.js" />"></script>
 <script src="<c:url value="/resources/assets/js/topic.op.js" />"></script>
 <script
 	src="<c:url value="/resources/assets/js/bootstrap-fileupload.js" />"></script>
@@ -24,13 +24,16 @@
 	rel="stylesheet">
 <link href="<c:url value="/resources/assets/css/waterfall.css" />"
 	rel="stylesheet">
-<link href="<c:url value="/resources/assets/css/colorbox.css" />"
+<link href="<c:url value="/resources/assets/css/jquery.fancybox.css" />"
 	rel="stylesheet" />
 <style type="text/css">
 body {
 	padding-top: 60px;
 	padding-bottom: 40px;
 	min-width: 920px;
+}
+img {
+  max-width: 900px;
 }
 </style>
 <link href="<c:url value="/resources/assets/css/bootstrap-responsive.css" />"
@@ -52,7 +55,7 @@ body {
 		$(function() {
 			$("#loading").hide();
 			// 初始化
-			topicOp.init('/pighouse/', $('#wallpull'));
+			topicOp.init('/pighouse1/', $('#wallpull'));
 			
 			
 			// load data for page

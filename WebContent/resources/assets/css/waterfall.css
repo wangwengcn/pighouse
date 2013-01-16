@@ -117,3 +117,18 @@
     font-family: Arial;
     font-size: 14px;
 }
+
+.ilike{
+ position:absolute;
+ top:13px;
+ right:15px;
+ display:none;
+}
+
+.thumbnail:hover .ilike{
+ display:block;
+}
+
+.dis-n{
+ display:none;
+}

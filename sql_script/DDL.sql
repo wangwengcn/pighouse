@@ -13,7 +13,9 @@ create table USER
 	ID int PRIMARY KEY AUTO_INCREMENT,
 	USER_NAME varchar(20),
 	DISPLAY_NAME varchar(20),
-	PASSWORD varchar(12)
+	PASSWORD varchar(12),
+	CREATETIME timestamp,
+	LASTUPDATETIME timestamp,
 )default charset=utf8;
 
 --TOPIC
@@ -22,8 +24,8 @@ create table TOPIC
 	ID int PRIMARY KEY AUTO_INCREMENT,
 	title varchar(20),
 	DESCRIPT varchar(50),
-	CREATETIME date,
-	LASTUPDATETIME date,
+	CREATETIME timestamp,
+	LASTUPDATETIME timestamp,
 	USER_ID int,
 	TOPIC_TYPE_ID int
 )default charset=utf8;
@@ -57,7 +59,8 @@ create table COMMENT
 (
 	ID int PRIMARY KEY AUTO_INCREMENT,
 	CONTENT varchar(20),
-	CREATETIME date,
 	USER_ID int,
-	TOPIC_ID int
+	TOPIC_ID int,
+	CREATETIME timestamp,
+	LASTUPDATETIME timestamp,
 )default charset=utf8;
