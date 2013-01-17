@@ -5,10 +5,11 @@
 /** Item show in page **/
 .item 
 {
-  width: 200px;
+  width: 190px;
   margin: 10px;
   float: left;
   background-color: white;
+  padding:9px;
 }
 /** For Waterfall **/
 /**** Clearfix ****/

@@ -6,16 +6,27 @@ var topicOp = {
 	container: null,
 	initial: true,
 	hasNext: true,
+	sessionId: false,
 		
 	/* functions */
 	init: function(_contextPath, _container)
 	{
-		this.contextPath = _contextPath;
+		var jsessionidIndex = _contextPath.indexOf("jsessionid");
+		if(jsessionidIndex > 0)
+		{
+			this.contextPath = _contextPath.substring(0, jsessionidIndex - 1);
+			this.sessionId = _contextPath.substring(jsessionidIndex);
+			alert(this.sessionId)
+		}
+		else
+		{
+			this.contextPath = _contextPath;
+		}
 		this.container = _container;
 		this.container.masonry({
 			itemSelector : '.item',
 			isFitWidth : true,
-			isAnimated: true
+//			isAnimated: true
 		});
 		this.loadData();
 	},
@@ -32,7 +43,7 @@ var topicOp = {
         if($("#loading").length > 0)
         	$("#loading").show();
 	  	$.ajax({
-	        url: this.contextPath + 'topic/getTopics',
+	        url: topicOp.generateURL('topic/getTopics'),
 	        dataType: 'xml',
 	        type : 'post',
 	        data: {page: this.page}, // Page parameter to make sure we load new data
@@ -42,7 +53,7 @@ var topicOp = {
      
      onLoadData: function(datas)
      {
-    	 this.page++;
+    	 topicOp.page++;
     	 topicOp.show_topics(datas);
 	 },
      
@@ -95,14 +106,14 @@ var topicOp = {
 		var width = $topic.children("pictures").children("width").text();
 		var title = $topic.children("title").text();
 		var createUser = $topic.children("createUser").children("displayName").text();
-		if(width > 200)
+		if(width > 190)
 		{
-			height = height*200/width;
-			width = 200;
+			height = height*190/width;
+			width = 190;
 		}
 		var newItem = '<div class="thumbnail item">'+
-						'<a class="bigPicture" href="'+ this.contextPath + 'topic/getPicture/' + imgId+'" title="'+title+ ' by '+createUser+ '" data-fancybox-group="bigPicture">'+
-			  				'<img style="width: '+width+'px; height:  '+height+'px;" src="'+ this.contextPath + 'topic/getPicture/' + imgId+'"/>'+
+						'<a class="bigPicture" href="'+ topicOp.generateURL('topic/getPicture/' + imgId) + '" title="'+title+ ' by '+createUser+ '" data-fancybox-group="bigPicture">'+
+			  				'<img style="width: '+width+'px; height:  '+height+'px;" src="'+ topicOp.generateURL('topic/getPicture/' + imgId)+'"/>'+
 			  			'</a>'+
 		  			  	'<div class="caption font-size-13" style="padding:0px">'+
 		  			  		'<table>'+
@@ -111,26 +122,26 @@ var topicOp = {
 		  			  					'<h5>'+title+'</h5>'+
 		  			  				'</td>'+
 			  			  			'<td>'+
-	  			  						'<img src="'+this.contextPath+'resources/assets/img/heart.png"/>'+
+	  			  						'<img src="'+ topicOp.generateURL('resources/assets/img/heart.png')+'"/>'+
 	  			  					'</td>'+
 		  			  			'</tr>'+
 		  			  		'</table>'+
 							'<ul class="rep_list font-size-13">'+
 								'<li>'+
 									'<p>'+
-										'<img src="'+ this.contextPath + 'resources/assets/img/unuser24.jpg' + '">&nbsp;'+
+										'<img src="'+ topicOp.generateURL('resources/assets/img/unuser24.jpg') + '">&nbsp;'+
 										'<a href="#">'+createUser+'</a>加入分享'+
 									'</p>'+
 								'</li>'+
 								'<li>'+
 									'<p>'+
-										'<img src="'+ this.contextPath + 'resources/assets/img/unuser24.jpg' + '">&nbsp;'+
+										'<img src="'+ topicOp.generateURL('resources/assets/img/unuser24.jpg') + '">&nbsp;'+
 										'<a href="#" target="_blank">张三</a>：很漂亮。。'+
 									'</p>'+
 								'</li>'+
 								'<li>'+
 									'<p>'+
-										'<img src="'+ this.contextPath + 'resources/assets/img/unuser24.jpg' + '">&nbsp;'+
+									'<img src="'+ topicOp.generateURL('resources/assets/img/unuser24.jpg') + '">&nbsp;'+
 										'<a href="#">李四</a>：我要买一件。。'+
 									'</p>'+
 								'</li>'+
@@ -139,8 +150,10 @@ var topicOp = {
 								'<button class="btn btn-danger btn-small" onclick="topicOp.add_like('+topicId+')"><i class="icon-heart icon-white"></i>&nbsp;喜欢</button><br>'+
 								'<button class="btn btn-primary btn-small" onclick="topicOp.add_comment('+topicId+')" style="margin-top:5px"><i class="icon-pencil icon-white"></i>&nbsp;评论</button>'+
 							'</div>'+
-							'<div class="input-append dis-n">'+
+							'<div class="input-append dis-n text-center">'+
 							    '<textarea id="comment'+topicId+'" style="width:180px;height:40px"/>'+
+							    '<br><button class="btn btn-warning btn-mini" onclick="topicOp.submit_comment('+topicId+')"><i class="icon-plus-sign icon-white"></i></button>'+
+							    '<button class="btn btn-warning btn-mini" onclick="topicOp.hide_comment('+topicId+')" style="margin-left:5px"><i class="icon-minus-sign icon-white"></i></button>'+
 						    '</div>'+
 		  				'</div>'+
 					  '</div>';
@@ -153,17 +166,34 @@ var topicOp = {
 		 $commentInput.parent().show();
 		 $commentInput.focus();
 		 this.container.masonry().resize();
-		 $commentInput.focusout(function(){
-			 if($.trim(this.value).length == 0)
-			 {
-				 $commentInput.parent().hide();
-				 topicOp.container.masonry().resize();
-			 }
-		 });
+		 $.scrollTo($commentInput.parents('.thumbnail'), 500, { offset:{left: 0, top:-50 }});
 	 },
 	 
 	 add_like: function(topicId)
 	 {
 		 
+	 },
+	 
+	 hide_comment: function(topicId)
+	 {
+		 var $commentInput = $('#comment'+topicId);
+		 $commentInput.parent().hide();
+		 $commentInput.attr("value","");
+		 this.container.masonry().resize();
+	 },
+	 
+	 submit_comment: function(topicId)
+	 {
+		 
+	 },
+	 
+	 generateURL: function(url)
+	 {
+		 var newUrl = this.contextPath + url;
+		 if(this.sessionId)
+		 {
+			 newUrl += ";" + this.sessionId;
+		 }
+		 return newUrl;
 	 }
 };

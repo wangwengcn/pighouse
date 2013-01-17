@@ -15,6 +15,7 @@
 <script src="<c:url value="/resources/assets/js/jquery.form.js" />"></script>
 <script src="<c:url value="/resources/assets/js/jquery.fancybox.js" />"></script>
 <script src="<c:url value="/resources/assets/js/topic.op.js" />"></script>
+<script src="<c:url value="/resources/assets/js/jquery.scrollTo-1.4.3.1-min.js" />"></script>
 <script
 	src="<c:url value="/resources/assets/js/bootstrap-fileupload.js" />"></script>
 <!-- Le styles -->
@@ -55,7 +56,7 @@ img {
 		$(function() {
 			$("#loading").hide();
 			// 初始化
-			topicOp.init('/pighouse1/', $('#wallpull'));
+			topicOp.init('<c:url value="/"/>', $('#wallpull'));
 			
 			
 			// load data for page
