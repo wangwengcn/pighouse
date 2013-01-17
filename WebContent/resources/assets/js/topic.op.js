@@ -16,7 +16,6 @@ var topicOp = {
 		{
 			this.contextPath = _contextPath.substring(0, jsessionidIndex - 1);
 			this.sessionId = _contextPath.substring(jsessionidIndex);
-			alert(this.sessionId)
 		}
 		else
 		{

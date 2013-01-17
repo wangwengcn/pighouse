@@ -29,6 +29,8 @@ insert into TOPIC_TYPE(NAME, DESCRIPT, CODE, DISPLAY_ORDER) values('DOTA','DOTA'
 -- TOPIC
 drop table TOPIC;
 
+drop table TOPIC_PICTURE;
+
 
 -- COMMENT
 drop table COMMENT;

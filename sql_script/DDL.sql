@@ -15,7 +15,7 @@ create table USER
 	DISPLAY_NAME varchar(20),
 	PASSWORD varchar(12),
 	CREATETIME timestamp,
-	LASTUPDATETIME timestamp,
+	LASTUPDATETIME timestamp
 )default charset=utf8;
 
 --TOPIC
@@ -41,7 +41,6 @@ create table TOPIC_TYPE
 )default charset=utf8;
 
 --TOPIC_PICTURE
-drop table TOPIC_PICTURE;
 
 CREATE TABLE TOPIC_PICTURE
 (
@@ -62,5 +61,5 @@ create table COMMENT
 	USER_ID int,
 	TOPIC_ID int,
 	CREATETIME timestamp,
-	LASTUPDATETIME timestamp,
+	LASTUPDATETIME timestamp
 )default charset=utf8;
