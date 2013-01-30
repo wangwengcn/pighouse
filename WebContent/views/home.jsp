@@ -14,8 +14,8 @@
 <script src="<c:url value="/resources/assets/js/jquery.validate.js" />"></script>
 <script src="<c:url value="/resources/assets/js/jquery.form.js" />"></script>
 <script src="<c:url value="/resources/assets/js/jquery.fancybox.js" />"></script>
-<script src="<c:url value="/resources/assets/js/topic.op.js" />"></script>
 <script src="<c:url value="/resources/assets/js/jquery.scrollTo-1.4.3.1-min.js" />"></script>
+<script src="<c:url value="/resources/assets/js/topic.op.js" />"></script>
 <script
 	src="<c:url value="/resources/assets/js/bootstrap-fileupload.js" />"></script>
 <!-- Le styles -->
