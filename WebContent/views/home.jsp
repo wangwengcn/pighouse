@@ -5,17 +5,19 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Bootstrap, from Twitter</title>
+<title>照片墙</title>
 <!-- Le javascript ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="<c:url value="/resources/assets/js/jquery-1.8.2.js" />"></script>
 <script src="<c:url value="/resources/assets/js/bootstrap.min.js" />"></script>
 <script src="<c:url value="/resources/assets/js/jquery.masonry.js" />"></script>
-<script src="<c:url value="/resources/assets/js/jquery.validate.js" />"></script>
+<script src="<c:url value="/resources/assets/js/jquery.validate.bootstrap.js" />"></script>
 <script src="<c:url value="/resources/assets/js/jquery.form.js" />"></script>
 <script src="<c:url value="/resources/assets/js/jquery.fancybox.js" />"></script>
+<script src="<c:url value="/resources/assets/js/jquery.pnotify.min.js" />"></script>
 <script src="<c:url value="/resources/assets/js/topic.op.js" />"></script>
 <script src="<c:url value="/resources/assets/js/jquery.scrollTo-1.4.3.1-min.js" />"></script>
+<script src="<c:url value="/resources/assets/js/login.js" />"></script>
 <script
 	src="<c:url value="/resources/assets/js/bootstrap-fileupload.js" />"></script>
 <!-- Le styles -->
@@ -26,6 +28,10 @@
 <link href="<c:url value="/resources/assets/css/waterfall.css" />"
 	rel="stylesheet">
 <link href="<c:url value="/resources/assets/css/jquery.fancybox.css" />"
+	rel="stylesheet" />
+<link href="<c:url value="/resources/assets/css/jquery.pnotify.default.css" />"
+	rel="stylesheet">
+<link href="<c:url value="/resources/assets/css/jquery.pnotify.default.icons.css" />"
 	rel="stylesheet" />
 <style type="text/css">
 body {

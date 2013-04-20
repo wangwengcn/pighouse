@@ -188,6 +188,7 @@ public class UserController {
 				// 验证密码
 				if(!form.getPassword().trim().equalsIgnoreCase(user.getPassword().trim()))
 				{
+					user = new User();
 					ErrorMessage errorMessage = new ErrorMessage();
 					errorMessage.setPropertyName("password");
 					errorMessage.setErrorMessage(ErrorUtil.PASSWORD_NOT_MATCH);

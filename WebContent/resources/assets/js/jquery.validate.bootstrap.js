@@ -208,7 +208,7 @@ $.extend($.validator, {
 		messages: {},
 		groups: {},
 		rules: {},
-		errorClass: "error",
+		errorClass: "text-error error",
 		validClass: "valid",
 		errorElement: "label",
 		focusInvalid: true,
@@ -254,7 +254,7 @@ $.extend($.validator, {
 			if (element.type === 'radio') {
 				this.findByName(element.name).addClass(errorClass).removeClass(validClass);
 			} else {
-				$(element).addClass(errorClass).removeClass(validClass);
+				$(element).parents('.control-group').addClass(errorClass).removeClass(validClass);
 			}
 		},
 		unhighlight: function(element, errorClass, validClass) {
@@ -262,6 +262,7 @@ $.extend($.validator, {
 				this.findByName(element.name).removeClass(errorClass).addClass(validClass);
 			} else {
 				$(element).removeClass(errorClass).addClass(validClass);
+				$(element).parents('.control-group').removeClass(errorClass).addClass(validClass);
 			}
 		}
 	},
@@ -284,9 +285,10 @@ $.extend($.validator, {
 		creditcard: "请输入合法的信用卡号",
 		equalTo: "请再次输入相同的值",
 		accept: "请输入拥有合法后缀名的字符串",
-		maxlength: $.validator.format("请输入一个长度最多是 {0} 的字符串"),
-		minlength: $.validator.format("请输入一个长度最少是 {0} 的字符串"),
-		rangelength: $.validator.format("请输入一个长度介于 {0} 和 {1} 之间的字符串"),
+		fixedlength : $.validator.format("请确定长度是{0}"),
+		maxlength: $.validator.format("请输入一个长度最多是 {0} 的字符"),
+		minlength: $.validator.format("请输入一个长度最少是 {0} 的字符"),
+		rangelength: $.validator.format("请输入一个长度介于 {0} 和 {1} 之间的字符"),
 		range: $.validator.format("请输入一个介于 {0} 和 {1} 之间的值"),
 		max: $.validator.format("请输入一个最大为 {0} 的值"),
 		min: $.validator.format("请输入一个最小为 {0} 的值")
@@ -404,6 +406,15 @@ $.extend($.validator, {
 			} else {
 				this.defaultShowErrors();
 			}
+		},
+		
+		showErrorsInPage:function($errorItems){
+			var validator = this;
+			$errorItems.each(function() {
+				var obj = new Object();
+				obj[$(this).find("propertyName").text()] = $(this).find("errorMessage").text();
+				validator.showErrors(obj);
+			});
 		},
 
 		// http://docs.jquery.com/Plugins/Validation/Validator/resetForm
@@ -1056,6 +1067,11 @@ $.extend($.validator, {
 			return "pending";
 		},
 
+		fixedlength: function(value, element, param) {
+			var length = $.isArray( value ) ? value.length : this.getLength($.trim(value), element);
+			return this.optional(element) || length == param;
+		},
+		
 		// http://docs.jquery.com/Plugins/Validation/Methods/minlength
 		minlength: function(value, element, param) {
 			var length = $.isArray( value ) ? value.length : this.getLength($.trim(value), element);

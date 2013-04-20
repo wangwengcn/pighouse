@@ -74,13 +74,6 @@
 					<input type="password" name="password" id="password" />
 				</div>
 			</div>
-			<div class="control-group">
-				<div class="controls">
-					<label class="checkbox"> <input type="checkbox" />Remember
-						me
-					</label>
-				</div>
-			</div>
 		</form>
 		<form id="newTopicForm" class="form-horizontal" enctype="multipart/form-data">
 			<div class="control-group">
@@ -127,13 +120,12 @@
 			type="submit">提交</button>
 	</div>
 </div>
-
 <script>
 	$(function() {
-		// 0:null,1:login,2:new topic
-		var windowType = 0;
-		// 0:un-login,1:login
-		var loginStatus = 0;
+		
+		$('#loginButton').click(function(){
+			loginTool.popUp();
+		});
 		
 		// 提交按钮点击事件
 		$("#popupSubmitButton").click(function() {
@@ -144,59 +136,6 @@
 			}
 		});
 	
-		// 登录相关验证
-		var loginValidator = $('#loginForm').validate({
-			rules : {
-				email : {
-					required : true,
-					email : true
-				},
-				password : {
-					required : true,
-					minlength : 6
-				}
-			},
-			errorClass : 'text-error',
-			submitHandler : function(form) {
-				showLoading();
-				$('#loginForm').ajaxSubmit({
-					dataType : 'xml',
-					type : 'post',
-					url : '<c:url value="/user/signIn" />',
-					success : loginSubmitHandler
-				});
-			}
-		});
-		
-		// 登录按钮点击事件
-		$("#loginButton").click(function() {
-			windowType = 1;
-			popUpWindow();
-			$('#loginForm').show();
-			loginValidator.resetForm();
-			$('#popupWindowTitle').html("请登录");
-		});
-		
-		// 登录返回结果处理方法
-		function loginSubmitHandler(xml) {
-			var $errorItems = $(xml).find("errorItem");
-			if ($errorItems.length == 0) {
-				// 登录成功
-				$('#popupWindow').modal("hide");
-				$('#loginButton').hide();
-				$('#myInfo').show();
-				$('#showDisplayName').html($(xml).find("displayName"));
-			} else {
-				$('#loadingForm').hide();
-				// 显示错误消息
-				$errorItems.each(function() {
-					var obj = new Object();
-					obj[$(this).find("propertyName").text()] = $(this).find("errorMessage").text();
-					loginValidator.showErrors(obj);
-				});
-			}
-		}
-		
 		// 分享相关验证
 		var topicValidator = $('#newTopicForm').validate({
 			rules : {
@@ -236,7 +175,7 @@
 			if ($errorItems.length == 0) {
 				// 分享成功
 				$('#popupWindow').modal("hide");
-				
+				var $newItem = topicOp.show_topic($(xml).find('topic'));
 				$('#wallpull').prepend( $newItem ).masonry( 'reload' );
 				// 查看大图
 				$newItem.children(".bigPicture").colorbox({
@@ -294,17 +233,6 @@
 			topicValidator.form();
 		});
 		
-		// 打开弹出框，并重置内容
-		function popUpWindow() {
-			$('#popupWindow').modal();
-			$('#loginForm').hide();
-			$('#newTopicForm').hide();
-			$('#loadingForm').hide();
-		}
-
-		function showLoading() {
-			$('#loadingForm').show();
-		}
 
 	});
 </script>

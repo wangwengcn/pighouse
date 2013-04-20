@@ -2,7 +2,7 @@ var topicOp = {
 	/* variables */
 	isLoading : false,
 	page : 1,
-	contextPath: null,
+	contextPath : window.location.pathname,
 	container: null,
 	initial: true,
 	hasNext: true,

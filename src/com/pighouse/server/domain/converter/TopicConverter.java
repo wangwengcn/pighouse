@@ -13,24 +13,26 @@ public final class TopicConverter{
 	
 	public static TopicVO converter(Topic t)
 	{
-		ArrayList<CommentVO> list = new ArrayList<CommentVO>();
-		for(Comment comment : t.getComments())
-		{
-			list.add(CommentConverter.converter(comment));
-			if(list.size() == ModelConstant.MAX_NUMBER_COMMMENTS_SHOW_IN_PAGE)
-			{
-				break;
-			}
-		}
-		
 		TopicVO topic = new TopicVO();
+		ArrayList<CommentVO> list = new ArrayList<CommentVO>();
+		if(t.getComments() != null)
+		{
+			for(Comment comment : t.getComments())
+			{
+				list.add(CommentConverter.converter(comment));
+				if(list.size() == ModelConstant.MAX_NUMBER_COMMMENTS_SHOW_IN_PAGE)
+				{
+					break;
+				}
+			}
+			topic.setCommentNumber(t.getComments().size());
+		}
 		topic.setId(t.getId().toString());
 		topic.setTitle(t.getTitle())
 			 .setLastUpdateTime(t.getLastUpdateTime())
 			 .setCreateUser(t.getCreateUser())
 			 .setCreateTime(t.getCreateTime());
 		topic.setComments(list);
-		topic.setCommentNumber(t.getComments().size());
 		topic.setPictures(t.getPictures());
 		return topic;
 	}
