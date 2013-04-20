@@ -24,8 +24,7 @@ var topicOp = {
 		this.container = _container;
 		this.container.masonry({
 			itemSelector : '.item',
-			isFitWidth : true,
-//			isAnimated: true
+			isFitWidth : true
 		});
 		this.loadData();
 	},

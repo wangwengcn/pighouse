@@ -14,10 +14,17 @@
 <script src="<c:url value="/resources/assets/js/jquery.validate.bootstrap.js" />"></script>
 <script src="<c:url value="/resources/assets/js/jquery.form.js" />"></script>
 <script src="<c:url value="/resources/assets/js/jquery.fancybox.js" />"></script>
+<<<<<<< HEAD
 <script src="<c:url value="/resources/assets/js/jquery.pnotify.min.js" />"></script>
 <script src="<c:url value="/resources/assets/js/topic.op.js" />"></script>
+=======
+>>>>>>> branch 'master' of https://github.com/wangwengcn/pighouse.git
 <script src="<c:url value="/resources/assets/js/jquery.scrollTo-1.4.3.1-min.js" />"></script>
+<<<<<<< HEAD
 <script src="<c:url value="/resources/assets/js/login.js" />"></script>
+=======
+<script src="<c:url value="/resources/assets/js/topic.op.js" />"></script>
+>>>>>>> branch 'master' of https://github.com/wangwengcn/pighouse.git
 <script
 	src="<c:url value="/resources/assets/js/bootstrap-fileupload.js" />"></script>
 <!-- Le styles -->
